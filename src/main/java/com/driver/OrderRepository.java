@@ -18,17 +18,16 @@ public class OrderRepository {
         this.orderNotAssigned = new HashSet<>();
     }
 
-
-    public void saveOrder(Order order) {
+    public void addOrder(Order order) {
         orderMap.put(order.getId(),order);
         orderNotAssigned.add(order.getId());
     }
 
-    public void savePartner(String partnerId) {
+    public void addPartner(String partnerId) {
         partnerMap.put(partnerId, new DeliveryPartner(partnerId));
     }
 
-    public void saveOrderPartnerPair(String orderId, String partnerId) {
+    public void addOrderPartnerPair(String orderId, String partnerId) {
         partnerMap.get(partnerId).setNumberOfOrders(partnerMap.get(partnerId).getNumberOfOrders()+1);
         if(orderPartnerMap.containsKey(partnerId)){
             List<String> orderList = orderPartnerMap.get(partnerId);
@@ -40,11 +39,11 @@ public class OrderRepository {
         orderNotAssigned.remove(orderId);
     }
 
-    public Order getOrder(String orderId) {
+    public Order getOrderById(String orderId) {
         return orderMap.get(orderId);
     }
 
-    public DeliveryPartner getPartner(String partnerId) {
+    public DeliveryPartner getPartnerById(String partnerId) {
         return partnerMap.get(partnerId);
     }
 
@@ -72,11 +71,11 @@ public class OrderRepository {
         return orderList;
     }
 
-    public Integer countOfUnassignedOrders() {
+    public Integer getCountOfUnassignedOrders() {
         return orderNotAssigned.size();
     }
 
-    public Integer OrdersLeftAfterGivenTimeByPartnerId(String time, String partnerId) {
+    public Integer getOrdersLeftAfterGivenTimeByPartnerId(String time, String partnerId) {
         int numericalTime = Integer.parseInt(time.substring(0,2))*60 + Integer.parseInt(time.substring(3,5));
         int count = 0;
         for(String orderId : orderPartnerMap.get(partnerId)){
@@ -87,7 +86,7 @@ public class OrderRepository {
         return count;
     }
 
-    public String LastDeliveryTimeByPartnerId(String partnerId) {
+    public String getLastDeliveryTimeByPartnerId(String partnerId) {
         int latestTime=0;
         if(orderPartnerMap.containsKey(partnerId)){
             for(String currentOrderId : orderPartnerMap.get(partnerId)){
@@ -111,7 +110,7 @@ public class OrderRepository {
         return strHours + ":" + minutes;
     }
 
-    public void deletePartner(String partnerId) {
+    public void deletePartnerById(String partnerId) {
         if(!orderPartnerMap.isEmpty()){
             orderNotAssigned.addAll(orderPartnerMap.get(partnerId));
         }
@@ -119,7 +118,7 @@ public class OrderRepository {
         partnerMap.remove(partnerId);
     }
 
-    public void deleteOrder(String orderId) {
+    public void deleteOrderById(String orderId) {
         orderMap.remove(orderId);
         if(orderNotAssigned.contains(orderId)){
             orderNotAssigned.remove(orderId);
