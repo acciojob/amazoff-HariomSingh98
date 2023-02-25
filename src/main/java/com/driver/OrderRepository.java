@@ -6,11 +6,17 @@ import java.util.*;
 
 @Repository
 public class OrderRepository {
-    private HashMap<String,Order> orderMap= new HashMap<>();
-    private HashMap<String,DeliveryPartner> partnerMap= new HashMap<>();
-    private HashMap<String,List<String>> orderPartnerMap= new HashMap<>();
-    private Set<String> orderNotAssigned= new HashSet<>();
+    private HashMap<String,Order> orderMap;
+    private HashMap<String,DeliveryPartner> partnerMap;
+    private HashMap<String,List<String>> orderPartnerMap;
+    private Set<String> orderNotAssigned;
 
+    public OrderRepository() {
+        this.orderMap = new HashMap<>();
+        this.partnerMap = new HashMap<>();
+        this.orderPartnerMap = new HashMap<>();
+        this.orderNotAssigned = new HashSet<>();
+    }
 
 
     public void saveOrder(Order order) {
