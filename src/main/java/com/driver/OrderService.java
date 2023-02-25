@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class OrderServices {
+public class OrderService {
     @Autowired
     OrderRepository orderRepository;
 
